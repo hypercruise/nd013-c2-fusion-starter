@@ -59,7 +59,19 @@ def show_range_image(frame, lidar_name):
     print("student task ID_S1_EX1")
 
     # step 1 : extract lidar data and range image for the roof-mounted lidar
-    
+    # extract lidar data and range image
+    lidar = waymo_utils.get(frame.lasers, lidar_name)
+    range_image, camera_projection, range_image_pose = waymo_utils.parse_range_image_and_camera_projection(lidar)    # Parse the top laser range image and get the associated projection.
+
+    # Convert the range image to a point cloud
+    lidar_calib = waymo_utils.get(frame.context.laser_calibrations, lidar_name)
+    pcl, pcl_attr = tools.project_to_pointcloud(frame, range_image, camera_projection, range_image_pose, lidar_calib)
+
+    # stack point cloud and lidar intensity
+    points_all = np.column_stack((pcl, pcl_attr[:, 1]))
+
+    return points_all
+
     # step 2 : extract the range and the intensity channel from the range image
     
     # step 3 : set values <0 to zero

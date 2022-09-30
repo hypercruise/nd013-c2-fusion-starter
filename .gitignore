@@ -1,0 +1,15 @@
+# Python
+*__pycache__
+*.ipynb_checkpoints/
+
+# ML Training Data
+dataset/
+results/
+checkpoint/
+saved_model/
+pretrained/
+pretrained_model/
+train/
+eval/
+exported/
+ckpt-*
